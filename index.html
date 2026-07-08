@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Khand';
+            src: url('fonts/Khand-Regular.ttf') format('truetype');
+            font-display: swap;
+        }
         :root{
             --teal:#0F766E;
             --teal-dark:#0B5C55;
@@ -78,6 +83,14 @@
             height:76px;
         }
         .logo{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:19px; color:var(--navy);}
+        .logo .brand-text{display:flex; flex-direction:column; align-items:stretch; line-height:1;}
+        .logo .marathi{
+            font-family: 'Khand', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: justify;
+            text-justify: inter-word;
+        }
         .logo svg{flex-shrink:0;}
         .navlinks{display:flex; gap:2px; align-items:center;}
         .navlinks a{
@@ -268,6 +281,14 @@
         footer{background:var(--navy); color:#B8C0CE; padding:56px 0 28px;}
         .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
         .footer-logo{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:18px; color:#fff; margin-bottom:14px;}
+        .footer-logo .brand-text{display:flex; flex-direction:column; align-items:stretch; line-height:1;}
+        .footer-logo .marathi{
+            font-family: 'Khand', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: justify;
+            text-justify: inter-word;
+        }
         .footer-grid p{font-size:13.5px; max-width:280px; line-height:1.6;}
         .footer-col h5{color:#fff; font-size:13px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px;}
         .footer-col a{display:block; font-size:14px; margin-bottom:10px; color:#AEB6C4;}
@@ -315,7 +336,10 @@
                     <rect x="123" y="91" width="13" height="40" fill="#D4AF37" rx="3"/>
                 </g>
             </svg>
-            Skill Bridge
+            <div class="brand-text">
+                <span>Skill Bridge</span>
+                <span class="marathi">म रा ठी</span>
+            </div>
         </a>
         <div class="navlinks" id="navlinks">
             <a href="#home">Home</a>
@@ -558,7 +582,10 @@
                         <rect x="103" y="99" width="13" height="32" fill="#fff" rx="3"/>
                         <rect x="123" y="91" width="13" height="40" fill="#D4AF37" rx="3"/>
                     </svg>
-                    Skill Bridge
+                    <div class="brand-text">
+                        <span>Skill Bridge</span>
+                        <span class="marathi">म रा ठी</span>
+                    </div>
                 </div>
                 <p>Hands-on SDET and test automation training that bridges non-tech talent into high-growth QA careers. Learn by doing.</p>
             </div>
