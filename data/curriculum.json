@@ -1,0 +1,20 @@
+[
+  {
+    "phase": "PHASE 01",
+    "title": "Foundation & Framework",
+    "description": "Core testing theory, your chosen language, and your first automation framework built from scratch — not a template you inherit.",
+    "tags": ["Test Design", "Git & CI/CD", "Framework Architecture"]
+  },
+  {
+    "phase": "PHASE 02",
+    "title": "Real-World Project Sprints",
+    "description": "Automate a live e-commerce or banking-style app end to end, including API layer, reporting, and a self-healing retry strategy.",
+    "tags": ["UI Automation", "API Testing", "Reporting & Dashboards"]
+  },
+  {
+    "phase": "PHASE 03",
+    "title": "Placement Sprint",
+    "description": "Resume and GitHub polish, mock technical rounds with real interviewers, and warm introductions to our hiring partners.",
+    "tags": ["Mock Interviews", "Portfolio Review", "Referral Network"]
+  }
+]

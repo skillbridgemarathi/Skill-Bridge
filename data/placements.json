@@ -1,0 +1,27 @@
+{
+  "stats": [
+    {
+      "value": "87%",
+      "label": "Placed within 4 months"
+    },
+    {
+      "value": "₹6.2L",
+      "label": "Average starting CTC"
+    },
+    {
+      "value": "40+",
+      "label": "Org Onboarded Our Candidates"
+    },
+    {
+      "value": "200+",
+      "label": "Learners trained"
+    }
+  ],
+  "Students Placed In": [
+    "TCS",
+    "Capgemini",
+    "VERITAS SYSTEMS",
+    "Mastercard",
+    "LTI"
+  ]
+}

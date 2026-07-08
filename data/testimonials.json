@@ -1,0 +1,23 @@
+[
+  {
+    "stars": 5,
+    "text": "I was a manual tester for six years. The Playwright course rebuilt my entire mental model of testing — I automated my current company's regression suite before I even finished the course.",
+    "author": "Ravi J.",
+    "title": "SDET, TCS",
+    "avatar": "RJ"
+  },
+  {
+    "stars": 5,
+    "text": "The mock interviews were harder than my real ones. That's exactly why I passed on the first try. Worth every rupee.",
+    "author": "Pankaj B.",
+    "title": "QA Engineer, Veritas Systems",
+    "avatar": "PB"
+  },
+  {
+    "stars": 5,
+    "text": "Coming from a non-tech background, I expected to be lost. Instead I shipped a working test framework in week 3. The mentorship made the difference.",
+    "author": "Varsha D.",
+    "title": "Automation Engineer, Capgemini",
+    "avatar": "VD"
+  }
+]

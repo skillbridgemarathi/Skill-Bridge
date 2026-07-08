@@ -1,0 +1,51 @@
+[
+  {
+    "tag": "Most Popular",
+    "name": "Playwright with TypeScript",
+    "description": "Zero to job-ready: POM architecture, API testing, CI/CD pipelines, and visual regression — the modern SDET stack.",
+    "lang": "Marathi + English",
+    "meta": "8 weeks · Live",
+    "price": "₹5,000",
+    "originalPrice": "₹10,000"
+  },
+  {
+    "tag": "Foundation",
+    "name": "Manual to Automation Bootcamp",
+    "description": "For manual testers ready to code. Java or Python fundamentals, Selenium WebDriver, and your first automation framework.",
+    "lang": "Marathi + English",
+    "meta": "10 weeks · Live",
+    "price": "₹19,999"
+  },
+  {
+    "tag": "Specialization",
+    "name": "API Test Automation",
+    "description": "Postman, RestAssured, and contract testing. Automate the layer that ships bugs before the UI ever sees them.",
+    "lang": "Marathi + English",
+    "meta": "5 weeks · Live",
+    "price": "₹14,999"
+  },
+  {
+    "tag": "Advanced",
+    "name": "Agentic AI for QA Engineers",
+    "description": "LangGraph, LLM-driven test generation, self-healing scripts, and autonomous QA agent design — where the field is heading.",
+    "lang": "Marathi + English",
+    "meta": "6 weeks · Live",
+    "price": "₹29,999"
+  },
+  {
+    "tag": "Enterprise",
+    "name": "Test Architecture Masterclass",
+    "description": "Framework design, governance, and CI/CD strategy for senior QA engineers moving into architect-level roles.",
+    "lang": "Marathi + English",
+    "meta": "6 weeks · Live",
+    "price": "₹34,999"
+  },
+  {
+    "tag": "Career",
+    "name": "1:1 Interview & Portfolio Sprint",
+    "description": "Mock interviews, resume rebuild, and GitHub portfolio review with a working Test Architect. Two-week intensive.",
+    "lang": "Marathi + English",
+    "meta": "2 weeks · 1:1",
+    "price": "₹9,999"
+  }
+]

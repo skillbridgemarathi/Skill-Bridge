@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Bridge — Learn By Doing | SDET & Test Automation Training</title>
+    <meta name="description" content="Skill Bridge: hands-on Playwright, Selenium & Agentic AI QA training that bridges non-tech professionals into automation careers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --teal:#0F766E;
+            --teal-dark:#0B5C55;
+            --navy:#0B1220;
+            --navy-soft:#111A2C;
+            --gold:#D4AF37;
+            --cream:#FAF8F4;
+            --mint:#E9F4F2;
+            --ink:#152033;
+            --slate:#5B6472;
+            --line:#E4E1D8;
+            --radius:14px;
+            --maxw:1180px;
+        }
+        *{box-sizing:border-box; margin:0; padding:0;}
+        html{scroll-behavior:smooth;}
+        @media (prefers-reduced-motion: reduce){
+            html{scroll-behavior:auto;}
+            *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+        }
+        body{
+            font-family:'Inter',sans-serif;
+            color:var(--ink);
+            background:var(--cream);
+            line-height:1.55;
+            -webkit-font-smoothing:antialiased;
+        }
+        h1,h2,h3,h4{font-family:'Sora',sans-serif; letter-spacing:-0.01em; color:var(--navy);}
+        a{color:inherit; text-decoration:none;}
+        img{max-width:100%; display:block;}
+        .mono{font-family:'JetBrains Mono',monospace;}
+        .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+        section{padding:104px 0;}
+        .eyebrow{
+            font-family:'JetBrains Mono',monospace;
+            font-size:12.5px;
+            letter-spacing:0.14em;
+            text-transform:uppercase;
+            color:var(--teal);
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:16px;
+        }
+        .eyebrow::before{content:'//'; color:var(--gold); font-weight:700;}
+        .btn{
+            display:inline-flex; align-items:center; justify-content:center; gap:8px;
+            padding:14px 26px; border-radius:10px; font-weight:600; font-size:15px;
+            cursor:pointer; border:1.5px solid transparent; transition:all .18s ease;
+            font-family:'Inter',sans-serif;
+        }
+        .btn-primary{background:var(--teal); color:#fff;}
+        .btn-primary:hover{background:var(--teal-dark); transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(15,118,110,.5);}
+        .btn-ghost{border-color:rgba(255,255,255,.25); color:#fff;}
+        .btn-ghost:hover{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.5);}
+        .btn-outline-dark{border-color:var(--navy); color:var(--navy);}
+        .btn-outline-dark:hover{background:var(--navy); color:#fff;}
+
+        /* ---------- NAV ---------- */
+        header{
+            position:sticky; top:0; z-index:100;
+            background:rgba(250,248,244,0.85);
+            backdrop-filter:blur(10px);
+            border-bottom:1px solid var(--line);
+        }
+        nav.wrap{
+            display:flex; align-items:center; justify-content:space-between;
+            height:76px;
+        }
+        .logo{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:19px; color:var(--navy);}
+        .logo svg{flex-shrink:0;}
+        .navlinks{display:flex; gap:2px; align-items:center;}
+        .navlinks a{
+            padding:10px 14px; border-radius:8px; font-size:14.5px; font-weight:500;
+            color:var(--slate); transition:all .15s ease; position:relative;
+        }
+        .navlinks a:hover{color:var(--navy); background:rgba(15,118,110,.07);}
+        .navlinks a.active{color:var(--teal); font-weight:600;}
+        .nav-cta{display:flex; align-items:center; gap:14px;}
+        .hamburger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px;}
+        .hamburger span{width:24px; height:2px; background:var(--navy); border-radius:2px;}
+        .mobile-menu{display:none; flex-direction:column; padding:8px 28px 24px; gap:2px; border-top:1px solid var(--line);}
+        .mobile-menu.open{display:flex;}
+        .mobile-menu a{padding:12px 6px; font-weight:500; color:var(--ink); border-bottom:1px solid var(--line);}
+
+        /* ---------- HERO ---------- */
+        .hero{
+            background:
+                    radial-gradient(circle at 85% 12%, rgba(212,175,55,0.10), transparent 45%),
+                    linear-gradient(180deg, var(--navy) 0%, var(--navy-soft) 100%);
+            color:#fff; padding:88px 0 100px; position:relative; overflow:hidden;
+        }
+        .hero::before{
+            content:''; position:absolute; inset:0;
+            background-image:
+                    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size:44px 44px;
+            mask-image:linear-gradient(180deg, rgba(0,0,0,.9), transparent 75%);
+        }
+        .hero .wrap{position:relative; display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;}
+        .hero h1{font-size:clamp(34px,4.4vw,54px); line-height:1.08; color:#fff; font-weight:800; margin-bottom:20px;}
+        .hero h1 .hl{color:var(--gold); font-style:italic; font-weight:700;}
+        .hero p.lead{font-size:17.5px; color:#C6CDDA; max-width:480px; margin-bottom:32px;}
+        .hero-ctas{display:flex; gap:14px; margin-bottom:44px; flex-wrap:wrap;}
+        .hero-stats{display:flex; gap:34px; flex-wrap:wrap;}
+        .hero-stats div{border-left:2px solid rgba(212,175,55,.5); padding-left:14px;}
+        .hero-stats strong{display:block; font-family:'Sora',sans-serif; font-size:26px; color:#fff; font-weight:700;}
+        .hero-stats span{font-size:12.5px; color:#9AA5B5; letter-spacing:.03em;}
+        .lang-badge{
+            display:flex; align-items:center; gap:10px; margin-top:32px; padding:12px 16px;
+            background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.35); border-radius:10px;
+            font-size:13.5px; color:#E9E2CE; max-width:440px;
+        }
+        .lang-ic{font-size:16px; flex-shrink:0;}
+        .lang-badge strong{color:var(--gold);}
+        .course-lang{
+            display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color:var(--teal-dark);
+            margin-top:2px;
+        }
+
+        /* Terminal signature card */
+        .terminal{
+            background:#0D1420; border:1px solid rgba(255,255,255,.09); border-radius:16px;
+            box-shadow:0 30px 70px -20px rgba(0,0,0,.6); overflow:hidden;
+        }
+        .terminal-bar{display:flex; align-items:center; gap:7px; padding:13px 16px; background:#0A0F1A; border-bottom:1px solid rgba(255,255,255,.07);}
+        .terminal-bar span{width:11px; height:11px; border-radius:50%;}
+        .dot-r{background:#FF5F57;} .dot-y{background:#FEBC2E;} .dot-g{background:#28C840;}
+        .terminal-bar .fname{margin-left:10px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#8B93A3;}
+        .terminal-body{padding:22px 20px 26px; font-family:'JetBrains Mono',monospace; font-size:13.5px; line-height:1.85;}
+        .terminal-body .c-kw{color:#F97583;} .terminal-body .c-fn{color:#79C0FF;} .terminal-body .c-str{color:#A5D6FF;}
+        .terminal-body .c-cm{color:#6B7684;} .terminal-body .c-gold{color:var(--gold);}
+        .term-line{opacity:0; animation:termIn .5s ease forwards;}
+        .term-line:nth-child(1){animation-delay:.15s} .term-line:nth-child(2){animation-delay:.4s}
+        .term-line:nth-child(3){animation-delay:.65s} .term-line:nth-child(4){animation-delay:.9s}
+        .term-line:nth-child(5){animation-delay:1.2s} .term-line:nth-child(6){animation-delay:1.55s}
+        @keyframes termIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+        .term-pass{display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:8px 12px; background:rgba(40,200,64,.1); border:1px solid rgba(40,200,64,.3); border-radius:8px; color:#4ADE80; font-size:12.5px;}
+
+        /* ---------- SECTION HEAD ---------- */
+        .section-head{max-width:640px; margin-bottom:56px;}
+        .section-head h2{font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:14px;}
+        .section-head p{color:var(--slate); font-size:16px;}
+        .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+
+        /* ---------- ABOUT ---------- */
+        .about{background:var(--cream);}
+        .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+        .pillars{display:flex; flex-direction:column; gap:20px; margin-top:8px;}
+        .pillar{display:flex; gap:16px; padding:20px; background:#fff; border:1px solid var(--line); border-radius:var(--radius);}
+        .pillar-ic{width:44px; height:44px; border-radius:10px; background:var(--mint); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+        .pillar h4{font-size:16px; margin-bottom:4px;}
+        .pillar p{font-size:14px; color:var(--slate);}
+        .bridge-diagram{background:#fff; border:1px solid var(--line); border-radius:20px; padding:36px; text-align:center;}
+        .bridge-diagram .cap{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate); margin-top:18px; letter-spacing:.04em;}
+
+        /* ---------- COURSES ---------- */
+        .courses{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+        .course-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+        .course-card{
+            border:1px solid var(--line); border-radius:var(--radius); padding:26px;
+            background:var(--cream); transition:all .2s ease; display:flex; flex-direction:column; height:100%;
+        }
+        .course-card:hover{border-color:var(--teal); transform:translateY(-4px); box-shadow:0 16px 34px -18px rgba(15,23,42,.25); background:#fff;}
+        .course-tag{
+            font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+            color:var(--teal-dark); background:var(--mint); padding:5px 10px; border-radius:6px; display:inline-block; margin-bottom:16px; width:fit-content;
+        }
+        .course-card h3{font-size:19px; margin-bottom:8px;}
+        .course-card p{font-size:14px; color:var(--slate); margin-bottom:18px; flex-grow:1;}
+        .course-meta{display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--slate); border-top:1px solid var(--line); padding-top:14px;}
+        .course-meta .price{color:var(--navy); font-weight:700; font-family:'Sora',sans-serif;}
+        .price .original{
+            text-decoration: line-through;
+            color: var(--slate);
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        /* ---------- CURRICULUM ---------- */
+        .curriculum{background:var(--cream);}
+        .phases{display:flex; flex-direction:column; gap:0;}
+        .phase{display:grid; grid-template-columns:90px 1fr; gap:28px; padding:28px 0; border-bottom:1px solid var(--line);}
+        .phase:last-child{border-bottom:none;}
+        .phase-num{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--gold); font-weight:600; padding-top:4px;}
+        .phase h3{font-size:19px; margin-bottom:8px;}
+        .phase p{color:var(--slate); font-size:14.5px; margin-bottom:12px;}
+        .phase-tags{display:flex; gap:8px; flex-wrap:wrap;}
+        .phase-tags span{font-size:12px; background:#fff; border:1px solid var(--line); padding:4px 10px; border-radius:20px; color:var(--ink);}
+
+        /* ---------- MENTOR ---------- */
+        .mentor{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+        .mentor-grid{display:grid; grid-template-columns:220px 1fr; gap:44px; align-items:center;}
+        .mentor-avatar{
+            width:220px; height:220px; border-radius:18px;
+            background:linear-gradient(160deg, var(--teal), var(--navy));
+            display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Sora',sans-serif; font-size:56px; font-weight:700;
+        }
+        .mentor-body .role{color:var(--teal); font-weight:600; font-size:14px; margin-bottom:10px; font-family:'JetBrains Mono',monospace;}
+        .mentor-body h3{font-size:24px; margin-bottom:10px;}
+        .mentor-body p{color:var(--slate); margin-bottom:16px;}
+        .mentor-badges{display:flex; gap:10px; flex-wrap:wrap;}
+        .mentor-badges span{font-size:12.5px; padding:6px 12px; border:1px solid var(--line); border-radius:8px; color:var(--navy); background:var(--cream);}
+
+        /* ---------- PLACEMENTS ---------- */
+        .placements{background:var(--navy); color:#fff;}
+        .placements .section-head h2, .placements .section-head p{color:#fff;}
+        .placements .section-head p{color:#B8C0CE;}
+        .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-bottom:56px;}
+        .stat-card{text-align:center; padding:28px 14px; border:1px solid rgba(255,255,255,.12); border-radius:var(--radius); background:rgba(255,255,255,.03);}
+        .stat-card strong{display:block; font-family:'Sora',sans-serif; font-size:34px; color:var(--gold); margin-bottom:6px;}
+        .stat-card span{font-size:13px; color:#AEB6C4;}
+        .partner-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; opacity:.7; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.05em; border-top:1px solid rgba(255,255,255,.12); padding-top:28px;}
+
+        /* ---------- TESTIMONIALS ---------- */
+        .testimonials{background:var(--cream);}
+        .test-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+        .test-card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:26px;}
+        .stars{color:var(--gold); font-size:14px; margin-bottom:14px; letter-spacing:2px;}
+        .test-card p{font-size:14.5px; color:var(--ink); margin-bottom:20px;}
+        .test-person{display:flex; align-items:center; gap:12px;}
+        .test-avatar{width:38px; height:38px; border-radius:50%; background:var(--mint); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; font-weight:700; font-family:'Sora',sans-serif; font-size:14px; flex-shrink:0;}
+        .test-person div strong{display:block; font-size:13.5px;}
+        .test-person div span{font-size:12px; color:var(--slate);}
+
+        /* ---------- FAQ ---------- */
+        .faq{background:#fff; border-top:1px solid var(--line);}
+        .faq-list{max-width:760px; margin:0 auto;}
+        .faq-item{border-bottom:1px solid var(--line);}
+        .faq-q{
+            display:flex; justify-content:space-between; align-items:center; padding:22px 4px;
+            cursor:pointer; font-weight:600; font-size:15.5px; color:var(--navy);
+        }
+        .faq-q .plus{font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--teal); transition:transform .2s ease;}
+        .faq-item.open .plus{transform:rotate(45deg);}
+        .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+        .faq-a p{padding:0 4px 22px; color:var(--slate); font-size:14.5px; max-width:640px;}
+
+        /* ---------- CONTACT ---------- */
+        .contact{background:var(--mint);}
+        .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+        .contact-info h2{font-size:clamp(26px,3.2vw,36px); margin-bottom:16px;}
+        .contact-info p{color:var(--slate); margin-bottom:28px; max-width:420px;}
+        .contact-item{display:flex; gap:14px; align-items:flex-start; margin-bottom:20px;}
+        .contact-item strong{display:block; font-size:14px;}
+        .contact-item span{font-size:13.5px; color:var(--slate);}
+        .contact-form{background:#fff; padding:32px; border-radius:18px; border:1px solid var(--line);}
+        .field{margin-bottom:18px;}
+        .field label{display:block; font-size:13px; font-weight:600; margin-bottom:7px; color:var(--navy);}
+        .field input, .field select, .field textarea{
+            width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:9px; font-family:'Inter',sans-serif; font-size:14.5px; color:var(--ink); background:var(--cream);
+        }
+        .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--teal); outline-offset:1px; border-color:var(--teal);}
+        .field textarea{resize:vertical; min-height:90px;}
+
+        /* ---------- FOOTER ---------- */
+        footer{background:var(--navy); color:#B8C0CE; padding:56px 0 28px;}
+        .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+        .footer-logo{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:18px; color:#fff; margin-bottom:14px;}
+        .footer-grid p{font-size:13.5px; max-width:280px; line-height:1.6;}
+        .footer-col h5{color:#fff; font-size:13px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px;}
+        .footer-col a{display:block; font-size:14px; margin-bottom:10px; color:#AEB6C4;}
+        .footer-col a:hover{color:var(--gold);}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.1); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12.5px; color:#7C8595;}
+
+        /* ---------- scroll-reveal ---------- */
+        .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+        .reveal.show{opacity:1; transform:translateY(0);}
+
+        /* ---------- responsive ---------- */
+        @media (max-width:980px){
+            .navlinks{display:none;}
+            .hamburger{display:flex;}
+            .hero .wrap{grid-template-columns:1fr;}
+            .hero-stats{gap:22px;}
+            .about-grid, .mentor-grid, .contact-grid{grid-template-columns:1fr; gap:36px;}
+            .course-grid, .test-grid{grid-template-columns:1fr 1fr;}
+            .stat-row{grid-template-columns:1fr 1fr;}
+            .footer-grid{grid-template-columns:1fr 1fr;}
+            .mentor-avatar{width:140px; height:140px; font-size:36px;}
+        }
+        @media (max-width:640px){
+            section{padding:72px 0;}
+            .course-grid, .test-grid{grid-template-columns:1fr;}
+            .stat-row{grid-template-columns:1fr 1fr;}
+            .footer-grid{grid-template-columns:1fr;}
+            .phase{grid-template-columns:1fr;}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="wrap">
+        <a href="#home" class="logo">
+            <svg width="34" height="34" viewBox="0 0 200 200">
+                <g>
+                    <line x1="50" y1="70" x2="50" y2="110" stroke="#0F766E" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="150" y1="70" x2="150" y2="110" stroke="#0F766E" stroke-width="10" stroke-linecap="round"/>
+                    <path d="M 50 75 Q 100 55, 150 75" stroke="#0F766E" stroke-width="11" fill="none" stroke-linecap="round"/>
+                    <rect x="63" y="115" width="13" height="16" fill="#0F766E" rx="3"/>
+                    <rect x="83" y="107" width="13" height="24" fill="#0F766E" rx="3"/>
+                    <rect x="103" y="99" width="13" height="32" fill="#0F766E" rx="3"/>
+                    <rect x="123" y="91" width="13" height="40" fill="#D4AF37" rx="3"/>
+                </g>
+            </svg>
+            Skill Bridge
+        </a>
+        <div class="navlinks" id="navlinks">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#courses">Courses</a>
+            <a href="#curriculum">Curriculum</a>
+            <a href="#mentors">Mentors</a>
+            <a href="#placements">Placements</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-cta">
+            <a href="#courses" class="btn btn-primary" style="padding:11px 20px; font-size:14px;">Explore Courses</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#courses">Courses</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#mentors">Mentors</a>
+        <a href="#placements">Placements</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="wrap">
+        <div>
+            <div class="eyebrow" style="color:var(--gold);">SDET &amp; Test Automation Training</div>
+            <h1>Write the test.<br>Run the test.<br><span class="hl">Land the job.</span></h1>
+            <p class="lead">Skill Bridge turns manual testers, career-switchers, and curious beginners into job-ready SDETs — through real projects in Playwright, Selenium, API automation, and Agentic AI for QA.</p>
+            <div class="hero-ctas">
+                <a href="#courses" class="btn btn-primary">Browse Courses</a>
+                <a href="#contact" class="btn btn-ghost">Book Free Counseling</a>
+            </div>
+            <div class="hero-stats">
+                <div><strong>1,200+</strong><span>Learners Trained</span></div>
+                <div><strong>87%</strong><span>Placement Rate</span></div>
+                <div><strong>40+</strong><span>Hiring Partners</span></div>
+            </div>
+            <div class="lang-badge">
+                <span class="lang-ic">🗣️</span>
+                <span>Taught in <strong>Marathi + English</strong> — concepts explained the way you actually think</span>
+            </div>
+        </div>
+        <div class="terminal reveal">
+            <div class="terminal-bar">
+                <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+                <span class="fname">career.spec.ts</span>
+            </div>
+            <div class="terminal-body">
+                <div class="term-line"><span class="c-kw">import</span> { test, expect } <span class="c-kw">from</span> <span class="c-str">'@playwright/test'</span>;</div>
+                <div class="term-line">&nbsp;</div>
+                <div class="term-line"><span class="c-fn">test</span>(<span class="c-str">'switch careers into tech'</span>, <span class="c-kw">async</span> ({ you }) => {</div>
+                <div class="term-line">&nbsp;&nbsp;<span class="c-kw">await</span> you.<span class="c-fn">learn</span>(<span class="c-str">'Playwright + TypeScript'</span>);</div>
+                <div class="term-line">&nbsp;&nbsp;<span class="c-kw">await</span> you.<span class="c-fn">build</span>(<span class="c-str">'3 real automation projects'</span>);</div>
+                <div class="term-line">&nbsp;&nbsp;expect(you.<span class="c-fn">jobReady</span>()).<span class="c-fn">toBe</span>(<span class="c-gold">true</span>);<br>});</div>
+            </div>
+            <div style="padding:0 20px 22px;">
+                <span class="term-pass">✓ 1 passed — Skill Bridge Career Track</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <div class="wrap about-grid">
+        <div class="reveal">
+            <div class="eyebrow">Why Skill Bridge</div>
+            <h2>The gap between "I want a tech job" and "I have a tech job" is a bridge, not a leap.</h2>
+            <p style="color:var(--slate); margin-top:14px; font-size:15.5px;">Most training programs teach tools. We teach how to think like an SDET — reading requirements, designing test strategy, automating with confidence, and defending your work in interviews. Every course is built and taught by working test architects, not full-time instructors.</p>
+            <div class="pillars">
+                <div class="pillar">
+                    <div class="pillar-ic">🤝</div>
+                    <div><h4>Trustworthy Mentorship</h4><p>Small cohorts, real feedback, direct access to your mentor — not a forum queue.</p></div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-ic">⚙️</div>
+                    <div><h4>Innovation-First Curriculum</h4><p>Agentic AI, self-healing automation, and LLM testing — skills the market hasn't caught up to yet.</p></div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-ic">📈</div>
+                    <div><h4>Growth You Can Prove</h4><p>Every module ends in a portfolio artifact — a repo, a report, a demo — not just a certificate.</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="bridge-diagram reveal">
+            <svg width="100%" height="220" viewBox="0 0 400 220">
+                <text x="30" y="40" font-family="JetBrains Mono, monospace" font-size="13" fill="#5B6472">Where you are</text>
+                <text x="270" y="40" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F766E" font-weight="600">Where you're going</text>
+                <circle cx="45" cy="110" r="26" fill="#E9F4F2" stroke="#0F766E" stroke-width="2"/>
+                <text x="45" y="115" text-anchor="middle" font-size="20">🧑</text>
+                <circle cx="355" cy="110" r="26" fill="#0F766E"/>
+                <text x="355" y="115" text-anchor="middle" font-size="20">🧑‍💻</text>
+                <path d="M 75 110 Q 200 40, 325 110" stroke="#D4AF37" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="2 10"/>
+                <line x1="120" y1="150" x2="120" y2="105" stroke="#0F766E" stroke-width="6" stroke-linecap="round"/>
+                <line x1="280" y1="150" x2="280" y2="105" stroke="#0F766E" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 120 108 Q 200 78, 280 108" stroke="#0F766E" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <line x1="200" y1="200" x2="200" y2="200" />
+            </svg>
+            <div class="cap">// SKILL BRIDGE — CAREER TRANSITION, ENGINEERED</div>
+        </div>
+    </div>
+</section>
+
+<!-- COURSES -->
+<section class="courses" id="courses">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div class="eyebrow">Course Catalog</div>
+            <h2>Pick your track. Build real automation from day one.</h2>
+            <p>Every course is project-based — you leave with working code, not just notes.</p>
+        </div>
+        <div class="course-grid" id="course-grid"></div>
+    </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum" id="curriculum">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div class="eyebrow">How It Works</div>
+            <h2>Three phases. One clear path to hired.</h2>
+            <p>The same structure across every track — learn, build, get placed.</p>
+        </div>
+        <div class="phases" id="phases-container"></div>
+    </div>
+</section>
+
+<!-- MENTORS -->
+<section class="mentor" id="mentors">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div class="eyebrow">Your Mentor</div>
+            <h2>Taught by people who ship this in production.</h2>
+        </div>
+        <div class="mentor-grid reveal">
+            <div class="mentor-avatar">DK</div>
+            <div class="mentor-body">
+                <div class="role">SENIOR TEST AUTOMATION ARCHITECT · BIG 4 CONSULTING</div>
+                <h3>Deepak — Founder &amp; Lead Mentor</h3>
+                <p>Deepak has spent his career designing enterprise-grade QA architecture — from Playwright and Selenium frameworks to autonomous, agentic QA systems using LangGraph and LLM-based validation. He started Skill Bridge to hand that same playbook to people the industry usually locks out.</p>
+                <div class="mentor-badges">
+                    <span>Playwright + TypeScript</span>
+                    <span>Agentic AI / LangGraph</span>
+                    <span>Test Architecture</span>
+                    <span>CI/CD &amp; DevOps QA</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PLACEMENTS -->
+<section class="placements" id="placements">
+    <div class="wrap">
+        <div class="section-head center reveal" style="margin-left:auto; margin-right:auto;">
+            <div class="eyebrow" style="color:var(--gold);">Outcomes</div>
+            <h2>We measure success in offers, not attendance.</h2>
+            <p>Real numbers from the last four cohorts.</p>
+        </div>
+        <div class="stat-row" id="stat-row"></div>
+        <div class="partner-row reveal" id="partner-row"></div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div class="eyebrow">Learner Stories</div>
+            <h2>From "I don't know where to start" to "I got the offer."</h2>
+        </div>
+        <div class="test-grid" id="test-grid"></div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+    <div class="wrap">
+        <div class="section-head center reveal" style="margin-left:auto; margin-right:auto;">
+            <div class="eyebrow">Questions</div>
+            <h2>Everything you're wondering before you enroll.</h2>
+        </div>
+        <div class="faq-list" id="faq-list"></div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <div class="wrap contact-grid">
+        <div class="contact-info reveal">
+            <div class="eyebrow">Get In Touch</div>
+            <h2>Let's find your track.</h2>
+            <p>Book a free 20-minute counseling call, or send us a message and a mentor will get back to you within one business day.</p>
+            <div class="contact-item"><strong>Email</strong><span>skillbridgemarathi@gmail.com</span></div>
+            <div class="contact-item"><strong>Location</strong><span>Pune, India · Cohorts open worldwide (remote-live)</span></div>
+            <div class="contact-item"><strong>Response Time</strong><span>Within 24 hours, Mon–Sat</span></div>
+        </div>
+        <form class="contact-form reveal" onsubmit="event.preventDefault(); this.querySelector('.form-success').style.display='block'; this.querySelector('.btn-submit').style.display='none';">
+            <div class="field"><label for="name">Full name</label><input id="name" type="text" required placeholder="Your name"></div>
+            <div class="field"><label for="email">Email address</label><input id="email" type="email" required placeholder="you@example.com"></div>
+            <div class="field"><label for="track">Interested track</label>
+                <select id="track">
+                    <option>Playwright with TypeScript</option>
+                    <option>Manual to Automation Bootcamp</option>
+                    <option>API Test Automation</option>
+                    <option>Agentic AI for QA Engineers</option>
+                    <option>Test Architecture Masterclass</option>
+                    <option>Not sure yet</option>
+                </select>
+            </div>
+            <div class="field"><label for="msg">Message</label><textarea id="msg" placeholder="Tell us a bit about your background and goals"></textarea></div>
+            <button type="submit" class="btn btn-primary btn-submit" style="width:100%;">Send Message</button>
+            <p class="form-success" style="display:none; color:var(--teal-dark); font-size:14px; font-weight:600; text-align:center; margin-top:14px;">✓ Thanks! A mentor will reach out within 24 hours.</p>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">
+                    <svg width="26" height="26" viewBox="0 0 200 200">
+                        <line x1="50" y1="70" x2="50" y2="110" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+                        <line x1="150" y1="70" x2="150" y2="110" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+                        <path d="M 50 75 Q 100 55, 150 75" stroke="#fff" stroke-width="11" fill="none" stroke-linecap="round"/>
+                        <rect x="63" y="115" width="13" height="16" fill="#fff" rx="3"/>
+                        <rect x="83" y="107" width="13" height="24" fill="#fff" rx="3"/>
+                        <rect x="103" y="99" width="13" height="32" fill="#fff" rx="3"/>
+                        <rect x="123" y="91" width="13" height="40" fill="#D4AF37" rx="3"/>
+                    </svg>
+                    Skill Bridge
+                </div>
+                <p>Hands-on SDET and test automation training that bridges non-tech talent into high-growth QA careers. Learn by doing.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Navigate</h5>
+                <a href="#courses">Courses</a>
+                <a href="#curriculum">Curriculum</a>
+                <a href="#mentors">Mentors</a>
+                <a href="#placements">Placements</a>
+            </div>
+            <div class="footer-col">
+                <h5>Company</h5>
+                <a href="#about">About Us</a>
+                <a href="#testimonials">Reviews</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h5>Connect</h5>
+                <a href="#">LinkedIn</a>
+                <a href="#">YouTube</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Skill Bridge. All rights reserved.</span>
+            <span>Learn By Doing</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // Active nav tab highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navA = document.querySelectorAll('.navlinks a');
+    const setActive = () => {
+        let current = '';
+        sections.forEach(sec => {
+            const rect = sec.getBoundingClientRect();
+            if (rect.top <= 120 && rect.bottom >= 120) current = sec.id;
+        });
+        navA.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+    };
+    window.addEventListener('scroll', setActive);
+    setActive();
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('show');
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // FAQ accordion
+    function initFaqAccordion() {
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const q = item.querySelector('.faq-q');
+            const a = item.querySelector('.faq-a');
+            q.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null; });
+                if (!isOpen) { item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+            });
+        });
+    }
+
+    // Fetch and apply properties
+    fetch('properties.json')
+        .then(response => response.json())
+        .then(data => {
+            document.title = data.title;
+            document.querySelector('meta[name="description"]').setAttribute('content', data.description);
+        });
+
+    // Fetch and render courses
+    fetch('data/courses.json')
+        .then(response => response.json())
+        .then(courses => {
+            const courseGrid = document.getElementById('course-grid');
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card reveal';
+                let priceHTML = `<span class="price">${course.price}</span>`;
+                if (course.originalPrice) {
+                    priceHTML = `<span class="price">${course.price} <span class="original">${course.originalPrice}</span></span>`;
+                }
+                courseCard.innerHTML = `
+                    <span class="course-tag">${course.tag}</span>
+                    <h3>${course.name}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-lang">🗣️ ${course.lang}</div>
+                    <div class="course-meta"><span>${course.meta}</span>${priceHTML}</div>
+                `;
+                courseGrid.appendChild(courseCard);
+                revealObserver.observe(courseCard);
+            });
+        });
+
+    // Fetch and render curriculum
+    fetch('data/curriculum.json')
+        .then(response => response.json())
+        .then(phases => {
+            const phasesContainer = document.getElementById('phases-container');
+            phases.forEach(phase => {
+                const phaseElement = document.createElement('div');
+                phaseElement.className = 'phase reveal';
+                phaseElement.innerHTML = `
+                    <div class="phase-num">${phase.phase}</div>
+                    <div>
+                        <h3>${phase.title}</h3>
+                        <p>${phase.description}</p>
+                        <div class="phase-tags">${phase.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+                    </div>
+                `;
+                phasesContainer.appendChild(phaseElement);
+                revealObserver.observe(phaseElement);
+            });
+        });
+
+    // Fetch and render placements
+    fetch('data/placements.json')
+        .then(response => response.json())
+        .then(data => {
+            const statRow = document.getElementById('stat-row');
+            data.stats.forEach(stat => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card reveal';
+                statCard.innerHTML = `<strong>${stat.value}</strong><span>${stat.label}</span>`;
+                statRow.appendChild(statCard);
+                revealObserver.observe(statCard);
+            });
+
+            const partnerRow = document.getElementById('partner-row');
+            data.partners.forEach(partner => {
+                const partnerSpan = document.createElement('span');
+                partnerSpan.textContent = partner;
+                partnerRow.appendChild(partnerSpan);
+            });
+        });
+
+    // Fetch and render testimonials
+    fetch('data/testimonials.json')
+        .then(response => response.json())
+        .then(testimonials => {
+            const testGrid = document.getElementById('test-grid');
+            testimonials.forEach(testimonial => {
+                const testCard = document.createElement('div');
+                testCard.className = 'test-card reveal';
+                testCard.innerHTML = `
+                    <div class="stars">${'★'.repeat(testimonial.stars)}${'☆'.repeat(5 - testimonial.stars)}</div>
+                    <p>"${testimonial.text}"</p>
+                    <div class="test-person">
+                        <div class="test-avatar">${testimonial.avatar}</div>
+                        <div><strong>${testimonial.author}</strong><span>${testimonial.title}</span></div>
+                    </div>
+                `;
+                testGrid.appendChild(testCard);
+                revealObserver.observe(testCard);
+            });
+        });
+
+    // Fetch and render FAQ
+    fetch('data/faq.json')
+        .then(response => response.json())
+        .then(faqs => {
+            const faqList = document.getElementById('faq-list');
+            faqs.forEach(faq => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item';
+                faqItem.innerHTML = `
+                    <div class="faq-q">${faq.question} <span class="plus">+</span></div>
+                    <div class="faq-a"><p>${faq.answer}</p></div>
+                `;
+                faqList.appendChild(faqItem);
+            });
+            initFaqAccordion();
+        });
+</script>
+
+</body>
+</html>
