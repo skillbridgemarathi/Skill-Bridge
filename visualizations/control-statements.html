@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Statements Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #07111f;
+            --bg-2: #0d1728;
+            --panel: rgba(14, 23, 39, 0.88);
+            --panel-2: rgba(17, 28, 47, 0.92);
+            --text: #e5eefb;
+            --muted: #9fb0c6;
+            --line: rgba(159, 176, 198, 0.22);
+            --cyan: #35c6ff;
+            --violet: #c084fc;
+            --green: #45e08a;
+            --orange: #ff9f43;
+            --red: #ff6b6b;
+            --amber: #f5b942;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 24px;
+            color: var(--text);
+            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(53, 198, 255, 0.18), transparent 28%),
+                radial-gradient(circle at 88% 14%, rgba(192, 132, 252, 0.16), transparent 30%),
+                linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--cyan);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 38px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan));
+        }
+
+        h1 {
+            font-size: clamp(30px, 4vw, 50px);
+            line-height: 1.05;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .lead {
+            max-width: 860px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 15.5px;
+            line-height: 1.65;
+        }
+
+        .stack {
+            display: grid;
+            gap: 18px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+        }
+
+        .card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cfe3fb;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .tag.if {
+            color: var(--cyan);
+            border-color: rgba(53, 198, 255, 0.28);
+            background: rgba(53, 198, 255, 0.08);
+        }
+
+        .tag.else {
+            color: var(--violet);
+            border-color: rgba(192, 132, 252, 0.28);
+            background: rgba(192, 132, 252, 0.08);
+        }
+
+        .tag.for {
+            color: var(--green);
+            border-color: rgba(69, 224, 138, 0.28);
+            background: rgba(69, 224, 138, 0.08);
+        }
+
+        .tag.while {
+            color: var(--orange);
+            border-color: rgba(255, 159, 67, 0.28);
+            background: rgba(255, 159, 67, 0.08);
+        }
+
+        .scenario {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            color: #dbe7f7;
+            line-height: 1.6;
+        }
+
+        .scenario strong {
+            color: #fff;
+        }
+
+        .example {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .example-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        button {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #06121f;
+            background: linear-gradient(135deg, var(--cyan), var(--green));
+            transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            color: #dce6f5;
+            font-weight: 600;
+        }
+
+        .input-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--cyan);
+        }
+
+        .output {
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px;
+            min-height: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        .result {
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        .neutral {
+            color: var(--muted);
+        }
+
+        .success {
+            color: var(--green);
+        }
+
+        .failure {
+            color: var(--red);
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .path {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 118px;
+            transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+        }
+
+        .path.active {
+            border-color: rgba(69, 224, 138, 0.42);
+            background: rgba(69, 224, 138, 0.08);
+        }
+
+        .path-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .path strong {
+            color: var(--green);
+        }
+
+        .code-output {
+            margin-top: 14px;
+            background: #08111d;
+            border: 1px solid rgba(159, 176, 198, 0.18);
+            border-radius: 12px;
+            padding: 14px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            color: #9ef0c4;
+            line-height: 1.55;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 14px 0 8px;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, var(--orange), var(--green));
+            transition: width 0.28s ease;
+            color: #06121f;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .song-list {
+            display: grid;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .song-item {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.03);
+            color: #c8d6ea;
+        }
+
+        .song-item.active {
+            border-color: rgba(69, 224, 138, 0.45);
+            background: rgba(69, 224, 138, 0.08);
+        }
+
+        .battery-status {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        @media (max-width: 760px) {
+            body {
+                padding: 16px;
+            }
+
+            .card-head {
+                flex-direction: column;
+            }
+
+            .split {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="eyebrow">Control Statements</div>
+            <h1>Watch decision-making and repetition happen step by step.</h1>
+            <p class="lead">
+                This interactive visualization shows how if, if/else, for, and while statements change program flow.
+                Use the controls, then read the generated code snippets to connect the action with the syntax.
+            </p>
+        </div>
+
+        <div class="stack">
+            <section class="card card-if">
+                <div class="card-head">
+                    <div>
+                        <div class="card-title">IF Statement</div>
+                        <div class="card-subtitle">A single decision: run the code only when the condition is true.</div>
+                    </div>
+                    <div class="tag if">Decision</div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Real-world scenario:</strong> Checking whether someone has a concert ticket to enter the venue.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">Do you have a valid ticket?</div>
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" id="hasTicket">
+                            I have a valid ticket
+                        </label>
+                    </div>
+
+                    <div class="controls">
+                        <button type="button" onclick="checkTicket()">Check Ticket</button>
+                        <button type="button" class="secondary" onclick="resetIF()">Reset</button>
+                    </div>
+
+                    <div class="output">
+                        <div class="result neutral" id="ticketResult">Click the button to check your ticket.</div>
+                    </div>
+
+                    <div class="code-output" id="ticketCode"></div>
+                </div>
+            </section>
+
+            <section class="card card-else">
+                <div class="card-head">
+                    <div>
+                        <div class="card-title">IF / ELSE Statement</div>
+                        <div class="card-subtitle">Two paths: one block runs when the condition is true, the other when it is false.</div>
+                    </div>
+                    <div class="tag else">Two Paths</div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Real-world scenario:</strong> Deciding what to do based on the weather.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">Check the weather</div>
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" id="isSunny" checked>
+                            Is it sunny?
+                        </label>
+                    </div>
+
+                    <div class="controls">
+                        <button type="button" onclick="checkWeather()">Make Decision</button>
+                        <button type="button" class="secondary" onclick="resetElse()">Reset</button>
+                    </div>
+
+                    <div class="split">
+                        <div class="path" id="pathTrue">
+                            <div class="path-label">Path A: true</div>
+                            <div>Go to the beach</div>
+                        </div>
+                        <div class="path" id="pathFalse">
+                            <div class="path-label">Path B: false</div>
+                            <div>Watch a movie</div>
+                        </div>
+                    </div>
+
+                    <div class="code-output" id="weatherCode"></div>
+                </div>
+            </section>
+
+            <section class="card card-for">
+                <div class="card-head">
+                    <div>
+                        <div class="card-title">FOR Loop</div>
+                        <div class="card-subtitle">Repeat the same action for each item in a collection.</div>
+                    </div>
+                    <div class="tag for">Iteration</div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Real-world scenario:</strong> Playing songs sequentially from a playlist.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">Playlist loop</div>
+
+                    <div class="controls">
+                        <button type="button" id="playBtn" onclick="playPlaylist()">Play Playlist</button>
+                        <button type="button" class="secondary" onclick="resetFor()">Reset</button>
+                    </div>
+
+                    <div class="progress-text" id="forProgress" style="display: none;"></div>
+
+                    <div class="output">
+                        <div class="result neutral" id="forResult">Click "Play Playlist" to start listening.</div>
+                    </div>
+
+                    <div class="song-list" id="forList"></div>
+                    <div class="code-output" id="forCode"></div>
+                </div>
+            </section>
+
+            <section class="card card-while">
+                <div class="card-head">
+                    <div>
+                        <div class="card-title">WHILE Loop</div>
+                        <div class="card-subtitle">Keep running as long as the condition stays true.</div>
+                    </div>
+                    <div class="tag while">Condition</div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Real-world scenario:</strong> Charging a phone battery until it reaches 100 percent.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">Battery charging</div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="batteryFill">
+                            <span id="batteryPercent">0%</span>
+                        </div>
+                    </div>
+                    <div class="battery-status" id="whileProgress">Battery: 0% | Status: Not charging</div>
+
+                    <div class="controls">
+                        <button type="button" id="chargeBtn" onclick="chargeBattery()">Start Charging</button>
+                        <button type="button" class="secondary" onclick="resetWhile()">Reset</button>
+                    </div>
+
+                    <div class="output" style="min-height: 96px;">
+                        <div class="result neutral" id="whileResult">Click "Start Charging" to begin.</div>
+                    </div>
+
+                    <div class="code-output" id="whileCode"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        let playlistTimer = null;
+        let batteryTimer = null;
+
+        function checkTicket() {
+            const hasTicket = document.getElementById('hasTicket').checked;
+            const result = document.getElementById('ticketResult');
+            const code = document.getElementById('ticketCode');
+
+            if (hasTicket) {
+                result.textContent = 'PASS: Welcome! You can enter the concert.';
+                result.className = 'result success';
+                code.textContent = 'if (hasValidTicket) {\n    enterConcert();\n}\n\n// Condition TRUE -> code executed';
+            } else {
+                result.textContent = 'FAIL: You need a valid ticket to enter.';
+                result.className = 'result failure';
+                code.textContent = 'if (hasValidTicket) {\n    enterConcert();\n}\n\n// Condition FALSE -> code skipped';
+            }
+
+            code.style.display = 'block';
+        }
+
+        function resetIF() {
+            document.getElementById('hasTicket').checked = false;
+            document.getElementById('ticketResult').textContent = 'Click the button to check your ticket.';
+            document.getElementById('ticketResult').className = 'result neutral';
+            document.getElementById('ticketCode').style.display = 'none';
+        }
+
+        function checkWeather() {
+            const isSunny = document.getElementById('isSunny').checked;
+            const pathTrue = document.getElementById('pathTrue');
+            const pathFalse = document.getElementById('pathFalse');
+            const code = document.getElementById('weatherCode');
+
+            if (isSunny) {
+                pathTrue.classList.add('active');
+                pathFalse.classList.remove('active');
+                pathTrue.innerHTML = '<div class="path-label">Path A: true</div><div><strong>ACTIVE</strong><br>Go to the beach</div>';
+                pathFalse.innerHTML = '<div class="path-label">Path B: false</div><div>Watch a movie</div>';
+                code.textContent = 'if (isSunny) {\n    goToBeach();\n} else {\n    watchMovieAtHome();\n}\n\n// TRUE path executed';
+            } else {
+                pathTrue.classList.remove('active');
+                pathFalse.classList.add('active');
+                pathTrue.innerHTML = '<div class="path-label">Path A: true</div><div>Go to the beach</div>';
+                pathFalse.innerHTML = '<div class="path-label">Path B: false</div><div><strong>ACTIVE</strong><br>Watch a movie</div>';
+                code.textContent = 'if (isSunny) {\n    goToBeach();\n} else {\n    watchMovieAtHome();\n}\n\n// ELSE path executed';
+            }
+
+            code.style.display = 'block';
+        }
+
+        function resetElse() {
+            document.getElementById('isSunny').checked = true;
+            document.getElementById('pathTrue').classList.remove('active');
+            document.getElementById('pathFalse').classList.remove('active');
+            document.getElementById('pathTrue').innerHTML = '<div class="path-label">Path A: true</div><div>Go to the beach</div>';
+            document.getElementById('pathFalse').innerHTML = '<div class="path-label">Path B: false</div><div>Watch a movie</div>';
+            document.getElementById('weatherCode').style.display = 'none';
+        }
+
+        function playPlaylist() {
+            if (playlistTimer) {
+                clearInterval(playlistTimer);
+            }
+
+            const playBtn = document.getElementById('playBtn');
+            const playlist = ['Song A', 'Song B', 'Song C', 'Song D'];
+            const result = document.getElementById('forResult');
+            const code = document.getElementById('forCode');
+            const list = document.getElementById('forList');
+            const progress = document.getElementById('forProgress');
+
+            playBtn.disabled = true;
+            list.innerHTML = '';
+            progress.style.display = 'block';
+            code.style.display = 'none';
+
+            const items = [];
+            let index = 0;
+
+            playlistTimer = setInterval(() => {
+                if (index < playlist.length) {
+                    const song = playlist[index];
+                    const item = document.createElement('div');
+                    item.className = 'song-item active';
+                    item.textContent = `Now playing: ${song}`;
+                    list.appendChild(item);
+                    items.push(item);
+
+                    items.forEach((entry, itemIndex) => {
+                        entry.classList.toggle('active', itemIndex === index);
+                    });
+
+                    result.textContent = `Now playing: ${song}`;
+                    result.className = 'result success';
+                    progress.textContent = `Processing song ${index + 1} of ${playlist.length}`;
+                    index += 1;
+                    return;
+                }
+
+                clearInterval(playlistTimer);
+                playlistTimer = null;
+                result.textContent = 'Playlist finished!';
+                result.className = 'result success';
+                progress.textContent = `Completed all ${playlist.length} songs.`;
+                code.textContent = 'playlist = ["Song A", "Song B", "Song C", "Song D"]\n\nfor song in playlist:\n    print("Now playing: " + song)\n\nprint("Playlist finished!")';
+                code.style.display = 'block';
+                playBtn.disabled = false;
+            }, 800);
+        }
+
+        function resetFor() {
+            if (playlistTimer) {
+                clearInterval(playlistTimer);
+                playlistTimer = null;
+            }
+
+            document.getElementById('forResult').textContent = 'Click "Play Playlist" to start listening.';
+            document.getElementById('forResult').className = 'result neutral';
+            document.getElementById('forCode').style.display = 'none';
+            document.getElementById('forList').innerHTML = '';
+            document.getElementById('forProgress').style.display = 'none';
+            document.getElementById('forProgress').textContent = '';
+            const playBtn = document.getElementById('playBtn');
+            playBtn.disabled = false;
+        }
+
+        function updateBatteryDisplay(percent) {
+            document.getElementById('batteryFill').style.width = `${percent}%`;
+            document.getElementById('batteryPercent').textContent = `${percent}%`;
+            document.getElementById('whileProgress').textContent = `Battery: ${percent}% | Status: ${percent < 100 ? 'Charging...' : 'Fully charged'}`;
+        }
+
+        function chargeBattery() {
+            if (batteryTimer) {
+                clearInterval(batteryTimer);
+            }
+
+            const chargeBtn = document.getElementById('chargeBtn');
+            const result = document.getElementById('whileResult');
+            const code = document.getElementById('whileCode');
+            let battery = 0;
+
+            chargeBtn.disabled = true;
+            result.textContent = 'Charging...';
+            result.className = 'result neutral';
+            code.style.display = 'none';
+
+            batteryTimer = setInterval(() => {
+                battery += 20;
+                if (battery > 100) {
+                    battery = 100;
+                }
+
+                updateBatteryDisplay(battery);
+
+                if (battery < 100) {
+                    result.textContent = 'Charging...';
+                    return;
+                }
+
+                clearInterval(batteryTimer);
+                batteryTimer = null;
+                result.textContent = '100% charge completed!';
+                result.className = 'result success';
+                code.textContent = 'battery_percentage = 0\n\nwhile battery_percentage < 100:\n    print("battery charging")\n    battery_percentage += 20\n\nprint("100% charge completed!")';
+                code.style.display = 'block';
+                chargeBtn.disabled = false;
+            }, 600);
+        }
+
+        function resetWhile() {
+            if (batteryTimer) {
+                clearInterval(batteryTimer);
+                batteryTimer = null;
+            }
+
+            document.getElementById('batteryFill').style.width = '0%';
+            document.getElementById('batteryPercent').textContent = '0%';
+            document.getElementById('whileProgress').textContent = 'Battery: 0% | Status: Not charging';
+            document.getElementById('whileResult').textContent = 'Click "Start Charging" to begin.';
+            document.getElementById('whileResult').className = 'result neutral';
+            document.getElementById('whileCode').style.display = 'none';
+            document.getElementById('chargeBtn').disabled = false;
+        }
+    </script>
+</body>
+</html>
